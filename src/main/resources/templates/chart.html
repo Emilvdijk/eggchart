@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+  .content {
+    max-width: 1111px;
+    margin: auto;
+    background: white;
+    padding: 10px;
+  }
+</style>
+<head>
+  <title>EggChart</title>
+  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="chart" class="content"></div>
+<script>
+  fetch('/api/chart-data')
+      .then(response => response.json())
+      .then(data => {
+              var trace1 = {
+                  x: data.xValues,
+                  y: data.yValues,
+                  line: {shape: 'spline'},
+                  type: 'scatter'
+              };
+              var layout = {
+                  title: {
+                      text: 'Egg Price Chart'
+                  },
+                  xaxis: {
+                      title: {
+                          text: 'Time'
+                      },
+                      showgrid: false,
+                      zeroline: false
+                  },
+                  yaxis: {
+                      title: {
+                          text: 'Gold'
+                      },
+                      showline: false
+                  }
+              };
+
+            Plotly.newPlot('chart', [trace1], layout);
+        })
+        .catch(error => console.error('Error loading chart data:', error));
+</script>
+</body>
+</html>
