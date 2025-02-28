@@ -1,4 +1,4 @@
-package com.example.eggchart.Service;
+package com.example.eggchart.service;
 
 import com.example.eggchart.Entity.PriceNode;
 import com.example.eggchart.Model.PriceResponse;
@@ -51,9 +51,5 @@ public class ItemService {
     public List<PriceNode> getPriceList(){
       return itemRepository.findAll();
     }
-
-//    PriceResponse(priceData=PriceResponse.PriceData(item1944=PriceResponse.ItemPrice(high=28, highTime=1740584725, low=28, lowTime=1740583456)))
-
-
 
 }
