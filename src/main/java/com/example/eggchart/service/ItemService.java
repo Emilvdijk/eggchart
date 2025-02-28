@@ -5,13 +5,12 @@ import com.example.eggchart.Model.PriceResponse;
 import com.example.eggchart.repository.ItemRepository;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -40,7 +39,8 @@ public class ItemService {
   }
 
 
-  @Scheduled(cron = "0 */1 * * * *") // Every 1 minute
+  @Scheduled(cron = "0 */5 * * * *") // Every 5 minute
+  @EventListener(ApplicationReadyEvent.class)
   public void scheduledNewPriceCheck(){
     LocalDateTime localDateTime = LocalDateTime.now();
     log.info("attempting new price check {}",localDateTime);
