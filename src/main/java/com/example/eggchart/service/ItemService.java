@@ -8,7 +8,10 @@ import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,6 +32,9 @@ public class ItemService {
   @Value("${myapp.eggId}")
   private String eggId;
 
+  @Autowired
+  private KafkaTemplate<String, Object> template;
+
   public PriceResponse callForEggPrice() {
     RestClient restClient = RestClient.builder().baseUrl(baseUrl).build();
     return restClient
@@ -38,18 +44,28 @@ public class ItemService {
         .body(PriceResponse.class);
   }
 
-
   @Scheduled(cron = "0 */5 * * * *") // Every 5 minute
   @EventListener(ApplicationReadyEvent.class)
-  public void scheduledNewPriceCheck(){
-    LocalDateTime localDateTime = LocalDateTime.now();
-    log.info("attempting new price check {}",localDateTime);
-    PriceNode priceNode = new PriceNode(callForEggPrice(), localDateTime);
-    itemRepository.save(priceNode);
+  public void doScheduledPriceCheck(){
+    log.info("engaging new price check");
+    template.send("eggTopicScheduledCheck",null);
   }
 
-    public List<PriceNode> getPriceList(){
-      return itemRepository.findAll();
-    }
+  @KafkaListener(topics = "eggTopicScheduledCheck", id = "eggChartPriceCheck")
+  public void NewPriceCheck() {
+    LocalDateTime localDateTime = LocalDateTime.now();
+    log.info("attempting new price check {}", localDateTime);
+    PriceNode priceNode = new PriceNode(callForEggPrice(), localDateTime);
+    template.send("eggTopicSaveNewNode", priceNode);
+  }
 
+  @KafkaListener(topics = "eggTopicSaveNewNode", id = "eggChartSaveNode")
+  public void SaveNewPriceCheck(PriceNode priceNode) {
+    itemRepository.save(priceNode);
+    log.info("new price log saved!");
+  }
+
+  public List<PriceNode> getPriceList() {
+    return itemRepository.findAll();
+    }
 }

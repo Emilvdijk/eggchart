@@ -24,14 +24,14 @@ public class ChartController {
     List<PriceNode> priceNodeList = itemService.getPriceList();
     List<String> xValues = new ArrayList<>();
     List<Integer> yValues = new ArrayList<>();
-    priceNodeList.forEach(priceNode -> {
-      xValues.add(priceNode.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-      yValues.add(priceNode.getGoldLow());
-    });
+    priceNodeList.forEach(
+        priceNode -> {
+          xValues.add(priceNode.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+          yValues.add(priceNode.getGoldLow());
+        });
 
     return Map.of(
         "xValues", xValues,
-        "yValues", yValues
-    );
+        "yValues", yValues);
   }
 }
