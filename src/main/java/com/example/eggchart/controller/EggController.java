@@ -1,12 +1,13 @@
 package com.example.eggchart.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@org.springframework.stereotype.Controller
+@Controller
 public class EggController {
 
   @GetMapping("/")
-  String chart(){
+  String chart() {
     return "chart";
   }
 }

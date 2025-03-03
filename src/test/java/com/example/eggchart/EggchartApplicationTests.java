@@ -8,9 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class EggchartApplicationTests {
 
-	@Test
-	void contextLoads() {
-		assertTrue(true); // :-)
-	}
-
+  @Test
+  void contextLoads() {
+    assertTrue(true); // :-)
+  }
 }

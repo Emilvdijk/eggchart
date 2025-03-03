@@ -5,25 +5,17 @@ import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
-import org.apache.kafka.common.serialization.IntegerSerializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.KafkaAdmin;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @Slf4j
 @EnableScheduling
-public class EggchartApplication{
+public class EggchartApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(EggchartApplication.class, args);
@@ -39,7 +31,6 @@ public class EggchartApplication{
              |_|  |_|\\___|_|_|\\___( )     \\/  \\/ \\___/|_|  |_|\\__,_(_)
                                   |/
             \033[0m""");
-
   }
 
   @Bean
@@ -51,10 +42,6 @@ public class EggchartApplication{
 
   @Bean
   public NewTopic topic() {
-    return TopicBuilder.name("eggChart")
-        .partitions(1)
-        .replicas(1)
-        .build();
+    return TopicBuilder.name("eggChart").partitions(10).replicas(1).build();
   }
-  
 }

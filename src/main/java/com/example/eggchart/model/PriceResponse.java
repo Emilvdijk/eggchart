@@ -1,4 +1,4 @@
-package com.example.eggchart.Model;
+package com.example.eggchart.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

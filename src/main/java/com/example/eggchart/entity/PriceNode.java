@@ -1,10 +1,10 @@
-package com.example.eggchart.Entity;
+package com.example.eggchart.entity;
 
-import com.example.eggchart.Model.PriceResponse;
+import com.example.eggchart.model.PriceResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import java.time.LocalDateTime;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +18,7 @@ public class PriceNode {
   private Integer goldLow;
 
   public PriceNode(PriceResponse priceResponse, LocalDateTime localDateTime) {
-    date= localDateTime;
+    date = localDateTime;
     goldHigh = priceResponse.getPriceData().getItem1944().getHigh();
     goldLow = priceResponse.getPriceData().getItem1944().getLow();
   }

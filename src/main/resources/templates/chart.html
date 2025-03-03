@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <style>
   .content {
     max-width: 1111px;
@@ -10,10 +10,10 @@
 </style>
 <head>
   <title>EggChart</title>
-  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
+  <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
 </head>
 <body>
-<div id="chart" class="content"></div>
+<div class="content" id="chart"></div>
 <script>
   fetch('/api/chart-data')
       .then(response => response.json())

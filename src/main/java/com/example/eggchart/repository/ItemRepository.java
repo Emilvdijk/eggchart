@@ -1,6 +1,6 @@
 package com.example.eggchart.repository;
 
-import com.example.eggchart.Entity.PriceNode;
+import com.example.eggchart.entity.PriceNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
